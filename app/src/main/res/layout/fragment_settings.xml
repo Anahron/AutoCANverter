@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Подключение BLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Настройки "
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="8dp"/>
+
+        <!-- Чекбокс принудительное отключение сброса момента -->
+        <CheckBox
+            android:id="@+id/checkboxReduceTorqueOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Принудительное отключение сброса момента"/>
+
+        <!-- Эмуляция сброса момента -->
+        <CheckBox
+            android:id="@+id/checkbox_emulate_torque_reduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Эмуляция сброса момента"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Секции для эмуляции моментов по передачам -->
+        <LinearLayout
+            android:id="@+id/layoutEmulateTorque"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp">
+
+            <!-- 1-2 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Эмуляция 1-2 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBar12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="10"/>
+
+            <!-- 2-3 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Эмуляция 2-3 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBar23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="10"/>
+
+            <!-- 3-4 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Эмуляция 3-4 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBar34"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="10"/>
+
+            <!-- 5-6 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Эмуляция 5-6 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBar56"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="10"/>
+        </LinearLayout>
+
+        <!-- Настройка момента переключения -->
+        <CheckBox
+            android:id="@+id/checkboxShiftTorqueAdjust"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Настройка момента переключения"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/layoutShiftTorqueAdjust"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp">
+
+            <!-- 1-2 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1-2 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBarAdj12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="12"
+                android:progress="6"/> <!-- 0% будет 6 -->
+
+            <!-- 2-3 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2-3 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBarAdj23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="12"
+                android:progress="6"/>
+
+            <!-- 3-4 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3-4 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBarAdj34"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="12"
+                android:progress="6"/>
+
+            <!-- 5-6 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5-6 (%)"/>
+            <SeekBar
+                android:id="@+id/seekBarAdj56"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="12"
+                android:progress="6"/>
+        </LinearLayout>
+
+        <!-- Прочие чекбоксы -->
+        <CheckBox
+            android:id="@+id/checkboxClearBits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Очистка бит (ЭБУ KPB)"/>
+
+        <CheckBox
+            android:id="@+id/checkboxEmulateInit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Эмуляция инициализации АКПП"/>
+
+        <CheckBox
+            android:id="@+id/checkboxEmulateRPM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Эмуляция оборотов АКПП"/>
+
+        <CheckBox
+            android:id="@+id/checkboxFixChecksum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Правка контрольной суммы"/>
+
+        <CheckBox
+            android:id="@+id/checkboxFixTorqueRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Правка запроса момента"/>
+
+        <CheckBox
+            android:id="@+id/fix_torque_rreduction_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Правка запроса снижения момента"/>
+
+        <CheckBox
+            android:id="@+id/checkboxEmulateClutch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Эмуляция сцепления"/>
+
+        <CheckBox
+            android:id="@+id/checkboxEmulateESP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Эмуляция ESP (308)"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.AutoCANverter" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/gray</item>
+        <!-- Цвет иконок: светлые или темные -->
+        <item name="android:windowLightStatusBar">false</item> <!-- true = темные иконки -->
+    </style>
+    <style name="CustomCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <!-- Цвет текста -->
+        <item name="android:textColor">@color/orange</item>
+        <!-- Цвет галочки -->
+        <item name="android:buttonTint">@color/green</item>
+    </style>
+</resources>
