@@ -55,7 +55,7 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
     private var gatt: BluetoothGatt? = null
 
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnScan.setOnClickListener {
@@ -68,7 +68,10 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
                 requestBlePermissions()
                 return@setOnClickListener
             }
-
+            if (!hasLocationPermission()) {
+                locationPermissionLauncher.launch(ACCESS_FINE_LOCATION)
+                return@setOnClickListener
+            }
 
             if (gatt != null) {
                 Log.e("AAAA", "gatt != null отключаем")
@@ -97,19 +100,37 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
             binding.seekBar45.progress = settings.emulatePercent[3]
             binding.seekBar56.progress = settings.emulatePercent[4]
             binding.seekBarGearChangeAlgoritm.progress = settings.shiftTorqueAdjust
+            binding.GearChangeAlgoritmPercent.text = settings.shiftTorqueAdjust.toString() + "%"
             binding.checkboxClearBits.isChecked = settings.clearBits
             binding.checkboxEmulateInit.isChecked = settings.emulateInit
+            binding.fixCruise.isChecked = settings.cruiseFix
             binding.checkboxEmulateRPM.isChecked = settings.emulateRPM
             binding.checkboxFixChecksum.isChecked = settings.fixChecksum
             binding.checkboxFixTorqueRequest.isChecked = settings.fixTorqueRequest
             binding.fixTorqueReductionRequest.isChecked = settings.fixTorqueReductionRequest
             binding.gearChangeAlgoritm.isChecked = settings.gearChangeAlgoritm
             binding.checkboxEmulateESP.isChecked = settings.emulateESP
+            binding.fix3c9.isChecked = settings.fix3c9
+            binding.fixInfoEP.isChecked = settings.fixInfoEP
+            binding.fixInfoEW.isChecked = settings.fixInfoEW
             binding.checkboxEmulateClutch.isChecked = settings.emulateClutch
         })
 
     }
 
+    private val locationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (!granted) {
+                Toast.makeText(requireContext(), "Геолокация нужна для подключения BLE", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun hasLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
 
     @SuppressLint("MissingPermission")
     fun setupSeekBars() {
@@ -188,6 +209,30 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
             val defaultData = byteArrayOf(0xFC.toByte(), 0x00, 0x0A.toByte(), 0x0A.toByte(), 0x0A.toByte(), 0x0A.toByte(), 0x0A.toByte(), 0x00.toByte())
             sendSettingsToEsp(defaultData)
         }
+        binding.fixInfoEP.setOnClickListener {
+            sendSettingsToEsp(
+                bleViewModel.setBitInSettingsOfTwo(
+                    1,
+                    3,
+                    1,
+                    4,
+                    binding.fixInfoEP.isChecked,
+                    if (binding.fixInfoEW.isChecked) !binding.fixInfoEW.isChecked else binding.fixInfoEW.isChecked
+                )
+            )
+        }
+        binding.fixInfoEW.setOnClickListener {
+            sendSettingsToEsp(
+                bleViewModel.setBitInSettingsOfTwo(
+                    1,
+                    4,
+                    1,
+                    3,
+                    binding.fixInfoEW.isChecked,
+                    if (binding.fixInfoEP.isChecked) !binding.fixInfoEP.isChecked else binding.fixInfoEP.isChecked
+                )
+            )
+        }
         binding.checkboxReduceTorqueOff.setOnClickListener {
             sendSettingsToEsp(
                 bleViewModel.setBitInSettingsOfTwo(
@@ -213,10 +258,17 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
             )
 
         }
+
 //        binding.seekBar12.progress = settings.emulatePercent[0] / 10
 //        binding.seekBar23.progress = settings.emulatePercent[1] / 10
 //        binding.seekBar34.progress = settings.emulatePercent[2] / 10
 //        binding.seekBar56.progress = settings.emulatePercent[3] / 10
+        binding.fix3c9.setOnClickListener {
+            sendSettingsToEsp(bleViewModel.setBitInSettings(1, 6, binding.fix3c9.isChecked))
+        }
+        binding.fixCruise.setOnClickListener {
+            sendSettingsToEsp(bleViewModel.setBitInSettings(1, 5, binding.fixCruise.isChecked))
+        }
         binding.checkboxClearBits.setOnClickListener {
             sendSettingsToEsp(bleViewModel.setBitInSettings(0, 2, binding.checkboxClearBits.isChecked))
         }
@@ -400,7 +452,7 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
             requireActivity().runOnUiThread {
                 binding.loadingIcon.visibility = View.VISIBLE
-                val rotate = ObjectAnimator.ofFloat(binding.loadingIcon, "rotationY", 0f, 360f)
+                val rotate = ObjectAnimator.ofFloat(binding.loadingIcon, "rotation", 0f, 360f)
                 rotate.duration = 2000
                 rotate.repeatCount = ValueAnimator.INFINITE
                 rotate.start()

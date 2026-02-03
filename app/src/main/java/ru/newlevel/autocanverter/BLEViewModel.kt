@@ -6,19 +6,8 @@ import androidx.lifecycle.ViewModel
 
 
 class BLEViewModel : ViewModel() {
-    private val _connectedDevice = MutableLiveData<String?>(null)
-    val connectedDevice: LiveData<String?> = _connectedDevice
-
     private val _settings = MutableLiveData(ESP32Settings())
     val settings: LiveData<ESP32Settings> = _settings
-
-    fun setDevice(name: String) {
-        _connectedDevice.value = name
-    }
-
-    fun updateSettings(byteArray: ByteArray) {
-        //  _settings.value = newSettings
-    }
 
     fun setBitInSettings(byteIndex: Int, bitIndex: Int, enabled: Boolean): ByteArray {
         val currentBytes = settings.value.byteSettings
@@ -86,6 +75,10 @@ class BLEViewModel : ViewModel() {
             gearChangeAlgoritm = b10,
             emulateClutch = b11,
             emulateESP = b12,
+            fixInfoEP = b13,
+            fixInfoEW = b14,
+            cruiseFix = b15,
+            fix3c9 = b16,
             byteSettings =  data.copyOf(),
             emulatePercent = listOf(data[2].toInt(), data[3].toInt(), data[4].toInt(),data[5].toInt(), data[6].toInt()),
             shiftTorqueAdjust = data[7].toInt()
@@ -108,6 +101,10 @@ data class ESP32Settings(
     var fixTorqueReductionRequest: Boolean = false,
     var emulateClutch: Boolean = false,
     var emulateESP: Boolean = false,
+    var fixInfoEP: Boolean = false,
+    var fixInfoEW: Boolean = false,
+    var cruiseFix: Boolean = false,
+    var fix3c9: Boolean = false,
     var byteSettings: ByteArray = byteArrayOf(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
 ) {
     override fun equals(other: Any?): Boolean {
