@@ -236,6 +236,7 @@
                                 android:text="0%"
                                 android:textColor="@color/orange" />
                         </LinearLayout>
+
                         <SeekBar
                             android:id="@+id/seekBarGearChangeAlgoritm"
                             android:layout_width="match_parent"
@@ -390,12 +391,17 @@
                         android:text="Fix Cruise/LIM" />
 
                     <CheckBox
-                        android:id="@+id/fixInfoEW"
+                        android:id="@+id/emulate4speed"
                         style="@style/CustomCheckBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fix INFO EW" />
-
+                        android:text="Эмуляция 4 скоростей main" />
+                    <CheckBox
+                        android:id="@+id/emulate4speedInfo"
+                        style="@style/CustomCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Эмуляция 4 скоростей info" />
                     <CheckBox
                         android:id="@+id/fixInfoEP"
                         style="@style/CustomCheckBox"
@@ -414,6 +420,7 @@
                         android:id="@+id/resetBTN"
                         android:layout_width="140dp"
                         android:layout_height="50dp"
+                        android:layout_margin="4dp"
                         android:height="50dp"
                         android:background="@drawable/rounded_button"
                         android:text="RESET"
@@ -421,7 +428,196 @@
                         android:textColor="@color/black"
                         android:textSize="14dp"
                         android:textStyle="bold"
+                        android:layout_marginBottom="8dp"
                         app:rippleColor="@color/green" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_height="2dp"
+                        android:background="@drawable/rounded" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Debug"
+                        android:textColor="@color/orange"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@drawable/rounded" />
+
+                    <LinearLayout
+                        android:id="@+id/linearIsDebug"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="3CD"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv3CD"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="44D"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv44D"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="38D"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv38D"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="34D"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv34D"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="305"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv305"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="30D"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv30D"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="40D"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv40D"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="8dp"
+                                android:text="3AD"
+                                android:textColor="@color/orange" />
+
+                            <ImageView
+                                android:id="@+id/iv3AD"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/normal" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

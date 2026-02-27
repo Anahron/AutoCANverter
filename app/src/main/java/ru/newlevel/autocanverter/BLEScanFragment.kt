@@ -112,8 +112,46 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
             binding.checkboxEmulateESP.isChecked = settings.emulateESP
             binding.fix3c9.isChecked = settings.fix3c9
             binding.fixInfoEP.isChecked = settings.fixInfoEP
-            binding.fixInfoEW.isChecked = settings.fixInfoEW
+            binding.emulate4speed.isChecked = settings.emulate4speed
             binding.checkboxEmulateClutch.isChecked = settings.emulateClutch
+            binding.emulate4speedInfo.isChecked = settings.emulate4speedInfo
+        })
+        bleViewModel.debug.observe(viewLifecycleOwner, Observer { debug ->
+            if(debug.frame305){
+                binding.iv305.setImageResource(R.drawable.ok)
+            } else {
+                binding.iv305.setImageResource(R.drawable.none)
+            }
+            if(debug.frame30D){
+                binding.iv30D.setImageResource(R.drawable.ok)
+            }
+            if(debug.frame40D){
+                binding.iv40D.setImageResource(R.drawable.ok)
+            }
+            if(debug.frame3CD){
+                binding.iv3CD.setImageResource(R.drawable.ok)
+            } else {
+                binding.iv3CD.setImageResource(R.drawable.none)
+            }
+            if(debug.frame44D){
+                binding.iv44D.setImageResource(R.drawable.ok)
+            } else {
+                binding.iv44D.setImageResource(R.drawable.none)
+            }
+            if(debug.frame38D){
+                binding.iv38D.setImageResource(R.drawable.ok)
+            } else {
+                binding.iv38D.setImageResource(R.drawable.none)
+            }
+            if(debug.frame34D){
+                binding.iv34D.setImageResource(R.drawable.ok)
+            } else {
+                binding.iv34D.setImageResource(R.drawable.none)
+            }
+            if(debug.frame3AD){
+                binding.iv3AD.setImageResource(R.drawable.ok)
+            }
+
         })
 
     }
@@ -217,18 +255,18 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
                     1,
                     4,
                     binding.fixInfoEP.isChecked,
-                    if (binding.fixInfoEW.isChecked) !binding.fixInfoEW.isChecked else binding.fixInfoEW.isChecked
+                    if (binding.emulate4speed.isChecked) !binding.emulate4speed.isChecked else binding.emulate4speed.isChecked
                 )
             )
         }
-        binding.fixInfoEW.setOnClickListener {
+        binding.emulate4speed.setOnClickListener {
             sendSettingsToEsp(
                 bleViewModel.setBitInSettingsOfTwo(
                     1,
                     4,
                     1,
                     3,
-                    binding.fixInfoEW.isChecked,
+                    binding.emulate4speed.isChecked,
                     if (binding.fixInfoEP.isChecked) !binding.fixInfoEP.isChecked else binding.fixInfoEP.isChecked
                 )
             )
@@ -263,6 +301,9 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
 //        binding.seekBar23.progress = settings.emulatePercent[1] / 10
 //        binding.seekBar34.progress = settings.emulatePercent[2] / 10
 //        binding.seekBar56.progress = settings.emulatePercent[3] / 10
+        binding.emulate4speedInfo.setOnClickListener {
+            sendSettingsToEsp(bleViewModel.setBitInSettings(1, 7, binding.emulate4speedInfo.isChecked))
+        }
         binding.fix3c9.setOnClickListener {
             sendSettingsToEsp(bleViewModel.setBitInSettings(1, 6, binding.fix3c9.isChecked))
         }
@@ -487,7 +528,9 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
                 Log.e("AAAA", "characteristic.uuid == CHAR_SETTINGS_UUID")
                 val data = characteristic.value
                 settingsCharacteristic = characteristic
-                applySettingsFromEsp(data)
+                if (data.size == 9) {
+                    applySettingsFromEsp(data)
+                }
             }
         }
 
@@ -502,14 +545,16 @@ class BLEScanFragment : Fragment(R.layout.fragment_ble_scan) {
                 Log.e("AAAA", "characteristic.uuid == CHAR_SETTINGS_UUID")
                 val data = characteristic.value
                 settingsCharacteristic = characteristic
-                applySettingsFromEsp(data)
+                if (data.size == 9) {
+                    applySettingsFromEsp(data)
+                }
             }
         }
     }
 
     fun applySettingsFromEsp(data: ByteArray) {
         Log.e("AAAA", "applySettingsFromEsp")
-        if (data.size < 8) return
+        if (data.size < 9) return
         Log.e("AAAA", "data.size < 8")
         bleViewModel.setSettings(data)
         requireActivity().runOnUiThread {
